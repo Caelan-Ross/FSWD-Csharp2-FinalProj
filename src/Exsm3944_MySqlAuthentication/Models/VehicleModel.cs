@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Exsm3944_MySqlAuthentication.Models
 {
-    [Table("model")]
-    public class Model
+    [Table("vehicle_model")]
+    public class VehicleModel
     {
         //Primary Key
         [Key]
@@ -13,6 +13,10 @@ namespace Exsm3944_MySqlAuthentication.Models
         // Name and type
         [Column("id", TypeName = "int(10)")]
         public int ID { get; set; }
+
+        [Required]
+        [Column("customer_email", TypeName = "varchar(128)")]
+        public string CustomerEmail { get; set; }
 
         [Required]
         [Column("name", TypeName = "varchar(50)")]
@@ -25,12 +29,12 @@ namespace Exsm3944_MySqlAuthentication.Models
         [Required]
         public int ManufacturerID { get; set; }
 
-        [InverseProperty(nameof(Vehicle))]
+        [InverseProperty(nameof(Vehicle.VehicleModel))]
         public virtual ICollection<Vehicle> Vehicles { get; set; }
 
         // Point to the connected property
         [ForeignKey(nameof(ManufacturerID))]
-        [InverseProperty(nameof(Models.Manufacturer.Models))]
+        [InverseProperty(nameof(Models.Manufacturer.VehicleModels))]
         public virtual Manufacturer Manufacturer { get; set; }
 
 
