@@ -1,5 +1,4 @@
-﻿using Exsm3944_MySqlAuthentication.Data.Models;
-using Exsm3944_MySqlAuthentication.Models;
+﻿using Exsm3944_MySqlAuthentication.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Policy;

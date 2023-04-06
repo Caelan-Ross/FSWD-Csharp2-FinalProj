@@ -1,4 +1,4 @@
-﻿@using Exsm3944_MySqlAuthentication.Data.Models;
+﻿@using Exsm3944_MySqlAuthentication.Models;
 @model Vehicle;
 @{
     ViewData["Title"] = "Create Vehicle";
@@ -24,15 +24,9 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Manufacturer, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.Manufacturer, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Manufacturer, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Model, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.EditorFor(model => model.Model, new { htmlAttributes = new { @class = "form-control"} })
-        @Html.ValidationMessageFor(model => model.Model, "", new { @class = "text-danger" })
+        @Html.LabelFor(model => model.ModelID, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.EditorFor(model => model.ModelID, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ModelID, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">

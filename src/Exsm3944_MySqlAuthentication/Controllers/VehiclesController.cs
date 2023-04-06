@@ -1,5 +1,5 @@
 ﻿using Exsm3944_MySqlAuthentication.Data;
-using Exsm3944_MySqlAuthentication.Data.Models;
+using Exsm3944_MySqlAuthentication.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -70,37 +70,33 @@ namespace Exsm3944_MySqlAuthentication.Controllers
         [HttpPost]
         public IActionResult Create(Vehicle vehicle)
         {
-            const string pattern = @"[a-zA-Z\d-_]+$";
-            Regex rg = new Regex(pattern);
-            bool proceed = false;
-            if(vehicle.Manufacturer != null)
+            if(vehicle.VIN != vehicle.VIN.ToUpper())
             {
-                if(rg.Match(vehicle.Manufacturer).Success)
-                {
-                    proceed = true;
-                }
-                else
-                {
-                    ModelState.AddModelError("Manufacturer", "Only Numbers, letters, Underscores, and Spaces in Manufacturer");
-                }
+                ModelState.AddModelError("VIN", "VIN must be all caps");
+            }   
+            
+            if(vehicle.ModelYear <= DateTime.Now.Year + 1)
+            {
+                ModelState.AddModelError("ModelYear", "Model Year must be less than or equal to the current year plus one.");
             }
 
-            if(vehicle.VIN != null)
+            if(vehicle.PurchaseDate > DateTime.Now)
             {
-                foreach(char c in vehicle.VIN)
-                {
-                    if(!char.IsUpper(c) && !char.IsDigit(c))
-                    {
-                        ModelState.AddModelError("VIN", "VIN can only contain Numbers and Uppercases.");
-                        break;
-                    }
-                }
+                ModelState.AddModelError("PurchaseDate", "Purchase Date must in the past or the current time.");
             }
-            
-            if(ModelState.IsValid && proceed)
+
+            if(vehicle.SaleDate != null)
+            {
+                if(vehicle.SaleDate < vehicle.PurchaseDate)
+                {
+                    ModelState.AddModelError("SaleDate", "Sale Date must be after the purchase date.");
+                }
+            }   
+
+            if(ModelState.IsValid)
             { //checking model state
 
-                VehicleHandler.CreateVehicle(vehicle.CustomerEmail, vehicle.VIN, vehicle.ModelYear, vehicle.Manufacturer, vehicle.Colour, vehicle.Model, vehicle.PurchaseDate, vehicle.SaleDate);
+                VehicleHandler.CreateVehicle(vehicle.CustomerEmail, vehicle.VIN, vehicle.ModelYear,  vehicle.Colour, vehicle.ModelID, vehicle.PurchaseDate, vehicle.SaleDate);
                 return RedirectToAction("Summary");
                               
             }
@@ -136,34 +132,8 @@ namespace Exsm3944_MySqlAuthentication.Controllers
         [HttpPost]
         public IActionResult Edit(Vehicle vehicle)
         {
-            const string pattern = @"[a-zA-Z\d-_]+$";
-            Regex rg = new Regex(pattern);
-            bool proceed = false;
-            if(vehicle.Manufacturer != null)
-            {
-                if(rg.Match(vehicle.Manufacturer).Success)
-                {
-                    proceed = true;
-                }
-                else
-                {
-                    ModelState.AddModelError("Manufacturer", "Only Numbers, letters, Underscores, and Spaces in Manufacturer");
-                }
-            }
 
-            if(vehicle.VIN != null)
-            {
-                foreach(char c in vehicle.VIN)
-                {
-                    if(!char.IsUpper(c) && !char.IsDigit(c))
-                    {
-                        ModelState.AddModelError("VIN", "VIN can only contain Numbers and Uppercases.");
-                        break;
-                    }
-                }
-            }
-
-            if(ModelState.IsValid && proceed)
+            if(ModelState.IsValid)
             { //checking model state
 
                 VehicleHandler.UpdateVehicle(vehicle);

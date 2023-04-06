@@ -1,4 +1,4 @@
-﻿@using Exsm3944_MySqlAuthentication.Data.Models;
+﻿@using Exsm3944_MySqlAuthentication.Models;
 @model IEnumerable<Vehicle>
 @{
     ViewData["Title"] = "Vehicle Summary";
@@ -10,7 +10,7 @@
         <th>@Html.DisplayNameFor(model => model.ID)</th>
         <th>@Html.DisplayNameFor(model => model.VIN)</th>
         <th>@Html.DisplayNameFor(model => model.ModelYear)</th>
-        <th>@Html.DisplayNameFor(model => model.Model)</th>
+        <th>@Html.DisplayNameFor(model => model.ModelID)</th>
         <th>@Html.DisplayNameFor(model => model.Colour)</th>
         <th>@Html.DisplayNameFor(model => model.PurchaseDate)</th>
         <th>@Html.DisplayNameFor(model => model.SaleDate)</th>
@@ -22,8 +22,7 @@
                     <td>@Html.DisplayFor(modelInstance => vehicle.ID)</td>
                     <td>@Html.DisplayFor(modelInstance => vehicle.VIN)</td>
                     <td>@Html.DisplayFor(modelInstance => vehicle.ModelYear)</td>
-                    <td>@Html.DisplayFor(modelInstance => vehicle.Model)</td>
-                    <td>@Html.DisplayFor(modelInstance => vehicle.Manufacturer)</td>
+                    <td>@Html.DisplayFor(modelInstance => vehicle.ModelID)</td>
                     <td>@Html.DisplayFor(modelInstance => vehicle.Colour)</td>
                     <td>@Html.DisplayFor(modelInstance => vehicle.PurchaseDate)</td>
                     <td>@Html.DisplayFor(modelInstance => vehicle.SaleDate)</td>

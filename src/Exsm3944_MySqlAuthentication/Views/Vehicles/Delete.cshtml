@@ -1,4 +1,4 @@
-﻿@model Exsm3944_MySqlAuthentication.Data.Models.Vehicle
+﻿@model Exsm3944_MySqlAuthentication.Models.Vehicle
 
 @{
     ViewData["Title"] = "View";
@@ -31,16 +31,10 @@
             @Html.DisplayFor(model => model.ModelYear)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Manufacturer)
+            @Html.DisplayNameFor(model => model.ModelID)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Manufacturer)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Model)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Model)
+            @Html.DisplayFor(model => model.ModelID)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Colour)

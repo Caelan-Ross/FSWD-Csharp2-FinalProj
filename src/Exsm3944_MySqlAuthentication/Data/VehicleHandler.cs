@@ -1,4 +1,4 @@
-﻿using Exsm3944_MySqlAuthentication.Data.Models;
+﻿using Exsm3944_MySqlAuthentication.Models;
 using System.Linq;
 
 namespace Exsm3944_MySqlAuthentication.Data
@@ -18,14 +18,13 @@ namespace Exsm3944_MySqlAuthentication.Data
         /// <param name="purchaseDate"> The purchase date of the vehicle</param>
         /// <param name="SaleDate"> The sale date of the vehicle, default null</param>
         /// <returns>The newly created vehicle object.</returns>
-        public static Vehicle CreateVehicle(string customerEmail, string VIN, int year, string manufacturer, string colour, string model, DateTime purchaseDate, DateTime? SaleDate = null )
+        public static Vehicle CreateVehicle(string customerEmail, string VIN, int year, string colour, int modelID, DateTime purchaseDate, DateTime? SaleDate = null )
         {
             Vehicle vehicle = new Vehicle();
             vehicle.CustomerEmail = customerEmail;
             vehicle.VIN = VIN;
             vehicle.ModelYear = year;
-            vehicle.Manufacturer = manufacturer;
-            vehicle.Model = model;
+            vehicle.ModelID = modelID;
             vehicle.Colour = colour;
             vehicle.PurchaseDate = purchaseDate;
             vehicle.SaleDate = SaleDate;
@@ -114,8 +113,7 @@ namespace Exsm3944_MySqlAuthentication.Data
                     oldVehicle.CustomerEmail = vehicle.CustomerEmail;
                     oldVehicle.VIN = vehicle.VIN;
                     oldVehicle.ModelYear = vehicle.ModelYear;
-                    oldVehicle.Manufacturer = vehicle.Manufacturer;
-                    oldVehicle.Model = vehicle.Model;
+                    oldVehicle.ModelID = vehicle.ModelID;
                     oldVehicle.Colour = vehicle.Colour;
                     oldVehicle.PurchaseDate = vehicle.PurchaseDate;
                     oldVehicle.SaleDate = vehicle.SaleDate;

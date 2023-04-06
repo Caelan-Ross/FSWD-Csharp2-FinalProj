@@ -42,14 +42,14 @@ namespace Exsm3944_MySqlAuthentication.Models
         [AllowNull]
         public DateTime? SaleDate { get; set; }
 
-        [Column("vehicle_model_id", TypeName = "int(10)")]
+        [Column("model_id", TypeName = "int(10)")]
         // Cannot be Null
         [Required]
         public int ModelID { get; set; }
 
         // Point to the connected property
         [ForeignKey(nameof(ModelID))]
-        [InverseProperty(nameof(Models.Model.Vehicles))]
-        public virtual Model Model { get; set; }
+        [InverseProperty(nameof(Models.VehicleModel.Vehicles))]
+        public virtual VehicleModel VehicleModel { get; set; }
     }
 }
