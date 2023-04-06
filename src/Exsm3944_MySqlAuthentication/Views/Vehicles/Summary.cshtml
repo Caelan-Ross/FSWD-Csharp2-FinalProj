@@ -1,0 +1,36 @@
+﻿@using Exsm3944_MySqlAuthentication.Data.Models;
+@model IEnumerable<Vehicle>
+@{
+    ViewData["Title"] = "Vehicle Summary";
+}
+<h1>Vehicle Summary</h1>
+<a asp-controller="Vehicles"asp-action="Create">Create a New Vehicle</a>
+<table>
+    <thead>
+        <th>@Html.DisplayNameFor(model => model.ID)</th>
+        <th>@Html.DisplayNameFor(model => model.VIN)</th>
+        <th>@Html.DisplayNameFor(model => model.ModelYear)</th>
+        <th>@Html.DisplayNameFor(model => model.Model)</th>
+        <th>@Html.DisplayNameFor(model => model.Colour)</th>
+        <th>@Html.DisplayNameFor(model => model.PurchaseDate)</th>
+        <th>@Html.DisplayNameFor(model => model.SaleDate)</th>
+    </thead>
+    <tbody>
+        @foreach(Vehicle vehicle in Model)
+        {
+                <tr>
+                    <td>@Html.DisplayFor(modelInstance => vehicle.ID)</td>
+                    <td>@Html.DisplayFor(modelInstance => vehicle.VIN)</td>
+                    <td>@Html.DisplayFor(modelInstance => vehicle.ModelYear)</td>
+                    <td>@Html.DisplayFor(modelInstance => vehicle.Model)</td>
+                    <td>@Html.DisplayFor(modelInstance => vehicle.Manufacturer)</td>
+                    <td>@Html.DisplayFor(modelInstance => vehicle.Colour)</td>
+                    <td>@Html.DisplayFor(modelInstance => vehicle.PurchaseDate)</td>
+                    <td>@Html.DisplayFor(modelInstance => vehicle.SaleDate)</td>
+                    <td>@Html.ActionLink("Details", "Details","Vehicles", new { vehicleId = vehicle.ID }, null)</td>
+                    <td>@Html.ActionLink("Edit", "Edit","Vehicles", new { vehicleId = vehicle.ID }, null)</td>
+                    <td>@Html.ActionLink("Delete", "Delete","Vehicles" ,new { vehicleId = vehicle.ID }, null)</td>
+                </tr>
+        }
+    </tbody>
+</table>
