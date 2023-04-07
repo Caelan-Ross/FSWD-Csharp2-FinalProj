@@ -93,7 +93,7 @@ namespace Exsm3944_MySqlAuthentication.Data
         /// </summary>
         /// <param name="email">The customer email attached to the Vehicle Models</param>
         /// <returns>The requested Vehicle Models if any exists, else a blank list</returns>
-        public static List<VehicleModel> GetVehicleByEmail(string email)
+        public static List<VehicleModel> GetVehicleModelByEmail(string email)
         {
             List<VehicleModel> vehicleModels = new List<VehicleModel>();
 

@@ -21,7 +21,7 @@ namespace Exsm3944_MySqlAuthentication.Models
 
         [Required]
         [Column("name", TypeName = "varchar(50)")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "VIN must be exactly 17 characters long.")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Name must be at least 3 characters long and less than 50.")]
         [RegularExpression(@"^[A-Za-z]+ -$", ErrorMessage = "Only Alphabetic characters, hyphens (-), and spaces allowed.")]
         public string Name { get; set; }
 

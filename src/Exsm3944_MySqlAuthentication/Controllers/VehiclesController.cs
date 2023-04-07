@@ -53,12 +53,17 @@ namespace Exsm3944_MySqlAuthentication.Controllers
         {
             if(User.Identity.Name != null)
             {
+                List<VehicleModel> models = VehicleModelHandler.GetVehicleModelByEmail(User.Identity.Name);
+                if(models.Count() == 0)
+                {
+                    return RedirectToAction("Create", "VehicleModel");
+                }
+                ViewBag.VehicleModels = models;
                 Vehicle vehicle = new Vehicle();
                 vehicle.ID = 0;
                 vehicle.CustomerEmail= User.Identity.Name;
                 return View(vehicle);
             }
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -97,8 +102,7 @@ namespace Exsm3944_MySqlAuthentication.Controllers
             { //checking model state
 
                 VehicleHandler.CreateVehicle(vehicle.CustomerEmail, vehicle.VIN, vehicle.ModelYear,  vehicle.Colour, vehicle.ModelID, vehicle.PurchaseDate, vehicle.SaleDate);
-                return RedirectToAction("Summary");
-                              
+                return RedirectToAction("Summary");               
             }
 
             return View(vehicle);
@@ -115,6 +119,7 @@ namespace Exsm3944_MySqlAuthentication.Controllers
             {
                 if(vehicleId != null)
                 {
+                    ViewBag.VehicleModels = VehicleModelHandler.GetVehicleModelByEmail(User.Identity.Name);
                     return View(VehicleHandler.GetVehicle(vehicleId));
                 }
 
@@ -137,7 +142,7 @@ namespace Exsm3944_MySqlAuthentication.Controllers
             { //checking model state
 
                 VehicleHandler.UpdateVehicle(vehicle);
-                return RedirectToAction("Summary");
+                return RedirectToAction("Summary", "Vehicles");
 
             }
             return View(vehicle);

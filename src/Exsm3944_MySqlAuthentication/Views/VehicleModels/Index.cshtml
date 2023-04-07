@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Exsm3944_MySqlAuthentication.Models.VehicleModel>
+
+@{
+    ViewData["Title"] = "Vehicle Model Index";
+}
+
+<h1>Index</h1>
+
+<a asp-controller="VehicleModels" asp-action="Create">Create a New Vehicle Model</a>
+<table>
+    <thead>
+        <th>@Html.DisplayNameFor(model => model.ID)</th>
+        <th>@Html.DisplayNameFor(model => model.Name)</th>
+        <th>@Html.DisplayNameFor(model => model.ManufacturerID)</th>
+    </thead>
+    <tbody>
+        @foreach(VehicleModel vehicleModel in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelInstance => vehicleModel.ID)</td>
+                <td>@Html.DisplayFor(modelInstance => vehicleModel.Name)</td>
+                <td>@Html.DisplayFor(modelInstance => vehicleModel.ManufacturerID)</td>
+                <td>@Html.ActionLink("Details", "Details","VehicleModels", new { id = vehicleModel.ID }, null)</td>
+                <td>@Html.ActionLink("Edit", "Edit","VehicleModels", new { id = vehicleModel.ID }, null)</td>
+                <td>@Html.ActionLink("Delete", "Delete","VehicleModels" ,new { id = vehicleModel.ID }, null)</td>
+            </tr>
+        }
+    </tbody>
+</table>

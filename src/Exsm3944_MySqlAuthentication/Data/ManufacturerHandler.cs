@@ -65,7 +65,7 @@ namespace Exsm3944_MySqlAuthentication.Data
         /// </summary>
         /// <param name="email">The customer email attached to the manufacturers</param>
         /// <returns>The requested manufacturers if any exists, else a blank list</returns>
-        public static List<Manufacturer> GetVehicleByEmail(string email)
+        public static List<Manufacturer> GetManufacturerByEmail(string email)
         {
             List<Manufacturer> manufacturers = new List<Manufacturer>();
 
