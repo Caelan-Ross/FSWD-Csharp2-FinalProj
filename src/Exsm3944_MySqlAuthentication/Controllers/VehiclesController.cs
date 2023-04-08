@@ -206,5 +206,92 @@ namespace Exsm3944_MySqlAuthentication.Controllers
             VehicleHandler.DeleteVehicle(id);
             return RedirectToAction("Summary");
         }
+
+
+        public IActionResult CustomView()
+        {
+            if(User.Identity.Name != null)
+            {
+                ViewBag.Email = User.Identity.Name;
+                return View(VehicleHandler.GetVehicleByEmail(User.Identity.Name));
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        public IActionResult CustomCreate()
+        {
+            if(User.Identity.Name != null)
+            {
+                List<Manufacturer> manufacturers = ManufacturerHandler.GetManufacturerByEmail(User.Identity.Name);
+                
+                ViewBag.Manufacturers = manufacturers;
+                PassView passView = new PassView();
+                return View(passView);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        [HttpPost]
+        public IActionResult CustomCreate(PassView passView)
+        {
+            ModelState.Remove("Vehicle.CustomerEmail");
+            ModelState.Remove("Manufacturer.CustomerEmail");
+            ModelState.Remove("VehicleModel.CustomerEmail");
+            ModelState.Remove("Vehicle.VehicleModel");
+            ModelState.Remove("Manufacturer.VehicleModels");
+            ModelState.Remove("VehicleModel.Vehicles");
+            ModelState.Remove("VehicleModel.Manufacturer");
+
+            if(ModelState.IsValid)
+            {
+                passView.Manufacturer = ManufacturerHandler.CreateManufacturer(passView.Manufacturer.Name, User.Identity.Name);
+                passView.VehicleModel.ManufacturerID = passView.Manufacturer.ID;
+            }
+
+            passView.Manufacturer.CustomerEmail = User.Identity.Name;
+
+            if(ModelState.IsValid)
+            {
+                passView.VehicleModel = VehicleModelHandler.CreateVehicleModel(passView.VehicleModel.Name, passView.Manufacturer.ID, User.Identity.Name);
+                passView.Vehicle.ModelID = passView.VehicleModel.ID;
+            }
+
+            if(passView.Vehicle.VIN != passView.Vehicle.VIN.ToUpper())
+            {
+                ModelState.AddModelError("VIN", "VIN must be all caps");
+            }
+
+            if(passView.Vehicle.ModelYear >= DateTime.Now.Year + 1)
+            {
+                ModelState.AddModelError("ModelYear", "Model Year must be less than or equal to the current year plus one.");
+            }
+
+            if(passView.Vehicle.PurchaseDate >= DateTime.Now)
+            {
+                ModelState.AddModelError("PurchaseDate", "Purchase Date must in the past or the current time.");
+            }
+
+            if(passView.Vehicle.SaleDate != null)
+            {
+                if(passView.Vehicle.SaleDate > passView.Vehicle.PurchaseDate)
+                {
+                    ModelState.AddModelError("SaleDate", "Sale Date must be after the purchase date.");
+                }
+            }
+            
+
+            if(ModelState.IsValid)
+            {
+                VehicleHandler.CreateVehicle(User.Identity.Name, passView.Vehicle.VIN, passView.Vehicle.ModelYear, passView.Vehicle.Colour, passView.VehicleModel.ID, passView.Vehicle.PurchaseDate, passView.Vehicle.SaleDate);
+                return RedirectToAction("CustomView", "Vehicles");
+            }
+
+            return View(passView);
+        }
+
+
+
     }
 }

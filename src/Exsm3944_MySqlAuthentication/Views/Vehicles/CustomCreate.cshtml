@@ -1,0 +1,78 @@
+﻿@using Exsm3944_MySqlAuthentication.Data;
+@model Exsm3944_MySqlAuthentication.PassView
+
+@{
+    ViewData["Title"] = "Custom Create";
+    Model.Manufacturer.CustomerEmail = User.Identity.Name;
+    Model.VehicleModel.CustomerEmail = User.Identity.Name;
+    Model.Vehicle.CustomerEmail = User.Identity.Name;
+
+    Model.VehicleModel.ManufacturerID = Model.Manufacturer.ID;
+    Model.Vehicle.ModelID = Model.VehicleModel.ID;
+    ViewBag.Manufacturers = ManufacturerHandler.GetManufacturerByEmail(User.Identity.Name);
+}
+
+<h1>Custom Create</h1>
+
+<div class="row">
+    <div class="col-md-4">
+
+        <form asp-action="CustomCreate" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br />
+            Manufacturer:
+            <br />
+            <div class="form-group">
+                <label asp-for="Manufacturer.Name" class="control-label"></label>
+                <input asp-for="Manufacturer.Name" class="form-control" />
+                <span asp-validation-for="Manufacturer.Name" class="text-danger"></span>
+            </div>
+
+            <br />
+            Vehicle Model:
+            <br />
+            <div class="form-group">
+                <label asp-for="VehicleModel.Name" class="control-label"></label>
+                <input asp-for="VehicleModel.Name" class="form-control" />
+                <span asp-validation-for="VehicleModel.Name" class="text-danger"></span>
+            </div>
+
+            <br />
+            Vehicle:
+            <br />
+            <div class="form-group">
+                <label asp-for="Vehicle.VIN" class="control-label"></label>
+                <input asp-for="Vehicle.VIN" class="form-control" />
+                <span asp-validation-for="Vehicle.VIN" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Vehicle.ModelYear" class="control-label"></label>
+                <input asp-for="Vehicle.ModelYear" class="form-control" />
+                <span asp-validation-for="Vehicle.ModelYear" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Vehicle.Colour" class="control-label"></label>
+                <input asp-for="Vehicle.Colour" class="form-control" />
+                <span asp-validation-for="Vehicle.Colour" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Vehicle.PurchaseDate" class="control-label"></label>
+                <input asp-for="Vehicle.PurchaseDate" class="form-control" />
+                <span asp-validation-for="Vehicle.PurchaseDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Vehicle.SaleDate" class="control-label"></label>
+                <input asp-for="Vehicle.SaleDate" class="form-control" />
+                <span asp-validation-for="Vehicle.SaleDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Custom Create" id="CustomCreate" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>

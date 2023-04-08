@@ -1,0 +1,79 @@
+﻿@using Exsm3944_MySqlAuthentication.Data;
+@model IEnumerable<Exsm3944_MySqlAuthentication.Models.Vehicle>
+
+@{
+    ViewData["Title"] = "CustomView";
+}
+
+<h1>CustomView</h1>
+
+<p>
+    <a asp-action="CustomCreate">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VIN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Colour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaleDate)
+            </th>
+            <th>
+                Vehicle Model
+            </th>
+            <th>
+                Manufacturer
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VIN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Colour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PurchaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SaleDate)
+            </td>
+            <td>
+                @{
+                    VehicleModel vehicleModel = VehicleModelHandler.GetVehicleModel(item.ModelID);
+                }
+                @vehicleModel.Name
+            </td>
+            <td>
+                @{
+                    Manufacturer manufacturer = ManufacturerHandler.GetManufacturer(vehicleModel.ManufacturerID);
+                }
+                @manufacturer.Name
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
