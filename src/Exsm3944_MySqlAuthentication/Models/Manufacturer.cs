@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Exsm3944_MySqlAuthentication.Models
 {
@@ -22,7 +23,7 @@ namespace Exsm3944_MySqlAuthentication.Models
         [Required]
         [Column("name", TypeName = "varchar(50)")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Name must be at least 3 characters long and less than 50.")]
-        [RegularExpression(@"^[A-Za-z]+ -$", ErrorMessage = "Only Alphabetic characters, hyphens (-), and spaces allowed.")]
+        [RegularExpression(@"^[A-Za-z -]*$", ErrorMessage = "Only Alphabetic characters, hyphens (-), and spaces allowed.")]
         public string Name { get; set; }
 
         // Point to the connected property
