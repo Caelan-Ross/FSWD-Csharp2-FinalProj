@@ -1,7 +1,9 @@
-﻿@model Exsm3944_MySqlAuthentication.Models.Vehicle
+﻿@using Exsm3944_MySqlAuthentication.Data;
+@model Exsm3944_MySqlAuthentication.Models.Vehicle
 
 @{
     ViewData["Title"] = "Edit Vehicle";
+    ViewBag.VehicleModels = VehicleModelHandler.GetVehicleModelByEmail(User.Identity.Name);
 }
 
 <h1>Edit</h1>
@@ -14,7 +16,7 @@
             @Html.HiddenFor(model => model.ID)
             @Html.HiddenFor(model => model.CustomerEmail)
             <div class="form-group">
-                @Html.DropDownListFor(m => m.ModelID, new SelectList(ViewBag.VehicleModels, "Id", "Name"), "-- Select Object --")
+                @Html.DropDownListFor(m => m.ModelID, new SelectList(ViewBag.VehicleModels, "ID", "Name"), "-- Select --")
                 @Html.ValidationMessageFor(model => model.VIN, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">

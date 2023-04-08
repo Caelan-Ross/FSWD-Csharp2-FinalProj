@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Exsm3944_MySqlAuthentication.Models
 {
@@ -29,6 +30,7 @@ namespace Exsm3944_MySqlAuthentication.Models
         [Required]
         public int ManufacturerID { get; set; }
 
+        [AllowNull]
         [InverseProperty(nameof(Vehicle.VehicleModel))]
         public virtual ICollection<Vehicle> Vehicles { get; set; }
 

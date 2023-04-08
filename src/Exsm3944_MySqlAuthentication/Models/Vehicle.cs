@@ -23,7 +23,7 @@ namespace Exsm3944_MySqlAuthentication.Models
         [Required]
         [Column("vin", TypeName = "varchar(18)")]
         [StringLength(17, MinimumLength = 17, ErrorMessage = "VIN must be exactly 17 characters long.")]
-        [RegularExpression(@"^[A-Z0-9]{3}(?:List)?$", ErrorMessage = "Only Capitols and numbers allowed.")]
+        [RegularExpression(@"^[A-Z0-9]*$", ErrorMessage = "Only Capitols and numbers allowed.")]
         public string VIN { get; set; }
 
         [Required]

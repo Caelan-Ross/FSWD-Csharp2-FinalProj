@@ -80,27 +80,28 @@ namespace Exsm3944_MySqlAuthentication.Controllers
                 ModelState.AddModelError("VIN", "VIN must be all caps");
             }   
             
-            if(vehicle.ModelYear <= DateTime.Now.Year + 1)
+            if(vehicle.ModelYear >= DateTime.Now.Year + 1)
             {
                 ModelState.AddModelError("ModelYear", "Model Year must be less than or equal to the current year plus one.");
             }
 
-            if(vehicle.PurchaseDate > DateTime.Now)
+            if(vehicle.PurchaseDate >= DateTime.Now)
             {
                 ModelState.AddModelError("PurchaseDate", "Purchase Date must in the past or the current time.");
             }
 
             if(vehicle.SaleDate != null)
             {
-                if(vehicle.SaleDate < vehicle.PurchaseDate)
+                if(vehicle.SaleDate > vehicle.PurchaseDate)
                 {
                     ModelState.AddModelError("SaleDate", "Sale Date must be after the purchase date.");
                 }
-            }   
+            }
+            ModelState.Remove("VehicleModel");
 
             if(ModelState.IsValid)
             { //checking model state
-
+                vehicle.CustomerEmail = User.Identity.Name;
                 VehicleHandler.CreateVehicle(vehicle.CustomerEmail, vehicle.VIN, vehicle.ModelYear,  vehicle.Colour, vehicle.ModelID, vehicle.PurchaseDate, vehicle.SaleDate);
                 return RedirectToAction("Summary");               
             }
@@ -138,9 +139,34 @@ namespace Exsm3944_MySqlAuthentication.Controllers
         public IActionResult Edit(Vehicle vehicle)
         {
 
+            if(vehicle.VIN != vehicle.VIN.ToUpper())
+            {
+                ModelState.AddModelError("VIN", "VIN must be all caps");
+            }
+
+            if(vehicle.ModelYear >= DateTime.Now.Year + 1)
+            {
+                ModelState.AddModelError("ModelYear", "Model Year must be less than or equal to the current year plus one.");
+            }
+
+            if(vehicle.PurchaseDate >= DateTime.Now)
+            {
+                ModelState.AddModelError("PurchaseDate", "Purchase Date must in the past or the current time.");
+            }
+
+            if(vehicle.SaleDate != null)
+            {
+                if(vehicle.SaleDate > vehicle.PurchaseDate)
+                {
+                    ModelState.AddModelError("SaleDate", "Sale Date must be after the purchase date.");
+                }
+            }
+            ModelState.Remove("VehicleModel");
+
             if(ModelState.IsValid)
             { //checking model state
 
+                vehicle.CustomerEmail = User.Identity.Name;
                 VehicleHandler.UpdateVehicle(vehicle);
                 return RedirectToAction("Summary", "Vehicles");
 

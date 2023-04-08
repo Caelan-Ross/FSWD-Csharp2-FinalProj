@@ -25,7 +25,7 @@ namespace Exsm3944_MySqlAuthentication.Controllers
             {
                 if(id != null)
                 {
-                    return View(VehicleHandler.GetVehicle(id));
+                    return View(VehicleModelHandler.GetVehicleModel(id));
                 }
 
                 return RedirectToAction("Index", "VehicleModels");
@@ -57,10 +57,12 @@ namespace Exsm3944_MySqlAuthentication.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(VehicleModel vehicleModel)
         {
+            ModelState.Remove("Vehicles");
+            ModelState.Remove("Manufacturer");
             if(ModelState.IsValid)
             {
                 VehicleModelHandler.CreateVehicleModel(vehicleModel.Name, vehicleModel.ManufacturerID, vehicleModel.CustomerEmail);
-                return RedirectToAction("Summary");
+                return RedirectToAction("Index");
             }
 
             return View(vehicleModel);
@@ -86,8 +88,11 @@ namespace Exsm3944_MySqlAuthentication.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(VehicleModel vehicleModel)
         {
+            ModelState.Remove("Vehicles");
+            ModelState.Remove("Manufacturer");
             if(ModelState.IsValid)
             {
+                vehicleModel.CustomerEmail = User.Identity.Name;
                 VehicleModelHandler.UpdateVehicleModel(vehicleModel);
                 return RedirectToAction("Index", "VehicleModels");
             }
